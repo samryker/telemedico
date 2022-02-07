@@ -12,9 +12,13 @@ from django.conf import settings
 def intake_form(request):
     intake = PatientIntakeForm(request.POST)
     if intake.is_valid():
-        data=intake.save()
+        intake.save()
+        data = intake.cleaned_data()
+        datastr=""
+        for key, value in data:
+            datastr = key+": "+value+", \n"
         subject = "MediPocket Consultation"
-        message = f'A new intake form has been added.Kindly check payment gateway to confirm timings to doctor.'.data
+        message = f'A new intake form has been added.Kindly check payment gateway to confirm timings to doctor. \n'.datastr
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ["priyanka@mymedipocket.com",]
         try:
