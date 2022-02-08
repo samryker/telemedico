@@ -13,10 +13,10 @@ def intake_form(request):
     intake = PatientIntakeForm(request.POST)
     if intake.is_valid():
         intake.save()
-        data = intake.cleaned_data()
+        data = intake.cleaned_data
         datastr=""
         for key, value in data:
-            datastr = key+": "+value+", \n"
+            datastr = datastr + key+": "+value+", \n"
         subject = "MediPocket Consultation"
         message = f'A new intake form has been added.Kindly check payment gateway to confirm timings to doctor. \n'.datastr
         email_from = settings.EMAIL_HOST_USER
