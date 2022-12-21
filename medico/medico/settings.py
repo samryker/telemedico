@@ -203,18 +203,18 @@ MEDIA_URL = '/media/'
 #     "http://127.0.0.1:3000",
 #     "https://main.d2zgh6ymprehn7.amplifyapp.com"
 # ]
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ORIGIN_WHITELIST = (
+# CORS_ORIGIN_WHITELIST = (
 
-    "https://medipocket.world",
-    "https://app.medipocket.com",
-    "http://localhost:8080",
-    "http://127.0.0.1:3000",
-    "https://main.d2zgh6ymprehn7.amplifyapp.com"
+#     "https://medipocket.world",
+#     "https://app.medipocket.com",
+#     "http://localhost:8080",
+#     "http://127.0.0.1:3000",
+#     "https://main.d2zgh6ymprehn7.amplifyapp.com"
 
 
-)
+# )
 
 CORS_ALLOW_HEADERS = [
 'accept',
