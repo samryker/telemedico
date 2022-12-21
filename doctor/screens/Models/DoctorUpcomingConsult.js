@@ -18,17 +18,16 @@ const DoctorUpcomingConsult = (props) => {
     rtcToken,
     channelName,
     customerName,
+    isExpired,
     navigation,
-    item
+    item,
   } = props;
   console.log("Consult => ", day, month);
   const { doctorD } = useSelector(mapState);
 
   const handleJoin = () => {
-
     const d = new Date();
     const timeLeft = (time - d) / 1000;
-
     navigation.navigate("beforecall", {
       timeLeft: timeLeft,
       RTCToken: rtcToken,
@@ -36,13 +35,11 @@ const DoctorUpcomingConsult = (props) => {
     });
   };
 
-  console.log('----------------------item', item)
-  
   return (
     <View style={[styles.card1, styles.shadow1]}>
       <View style={styles.doctorCard}>
         <View style={styles.doctorCardLeft}>
-          {!doctorD && <Text style={styles.cardTitle1}>Upcoming Consult</Text>}
+          {!doctorD && <Text style={styles.cardTitle1}>{!isExpired ? "Previous Consult" : "Upcoming Consult"}</Text>}
           <View style={styles.containerBoxes}>
             <View style={styles.box}>
               <DayModel day={day} month={month} isSelected={false} bg="1" />
@@ -70,12 +67,20 @@ const DoctorUpcomingConsult = (props) => {
               )}
             </View>
             <View style={styles.joinContainer}>
-              <TouchableOpacity
-                onPress={handleJoin}
-                style={[styles.doctorBtnStyle, styles.shadow1]}
-              >
-                <Text style={styles.doctorBtnStyleText}>Join Call</Text>
-              </TouchableOpacity>
+              {!isExpired ? (
+                <TouchableOpacity
+                  onPress={handleJoin}
+                  style={[styles.doctorBtnStyle, styles.shadow1]}
+                >
+                  <Text style={styles.doctorBtnStyleText}>Join Call</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={[styles.doctorBtnStyle2, styles.shadow1]}
+                >
+                  <Text style={styles.doctorBtnStyleText}>Call Ended</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>
@@ -194,6 +199,13 @@ const styles = StyleSheet.create({
   doctorBtnStyle: {
     // backgroundColor: "#f7f9f8",
     backgroundColor: "#2758E4",
+    borderRadius: 8,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    marginTop: 10,
+  },
+  doctorBtnStyle2: {
+    backgroundColor: "#C70039",
     borderRadius: 8,
     paddingHorizontal: 40,
     paddingVertical: 10,
