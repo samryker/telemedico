@@ -195,10 +195,12 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-CORS_ALLOWED_ORIGINS = [
-    # "https://medipocket.world",
-    # "https://app.medipocket.com",
-    # "http://localhost:8080",
-    # "http://127.0.0.1:3000",
-    '*'
-]
+# CORS_ALLOWED_ORIGINS = [
+#     # # "https://medipocket.world",
+#     # # "https://app.medipocket.com",
+#     # # "http://localhost:8080",
+#     # # "http://127.0.0.1:3000",
+#     # '*'
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
