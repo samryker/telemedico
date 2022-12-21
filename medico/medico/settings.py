@@ -200,6 +200,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://app.medipocket.com",
     "http://localhost:8080",
     "http://127.0.0.1:3000",
+    "https://main.d2zgh6ymprehn7.amplifyapp.com"
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
