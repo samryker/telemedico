@@ -152,15 +152,16 @@ const Profile = ({ route, navigation }) => {
   const handleSubmit = async () => {
     console.log("Here HandleSubmit");
     if (!firstName || !phone || !dob || !country) {
-      alert('Please fill all the fields...')
+      alert("Please fill all the fields...");
       return;
     }
     if (phone && phone.length < 8) {
-      alert('Please enter 8 digit or above...')
+      alert("Please enter 8 digit or above...");
       return;
     }
     if (avatar !== profileD.firebaseUser.avatar) await updateAvatarUser();
-    if (firstName !== profileD.firebaseUser.fullname) await updateFullnameUser();
+    if (firstName !== profileD.firebaseUser.fullname)
+      await updateFullnameUser();
     if (phone !== profileD.firebaseUser.phone) await updatePhoneUser();
     if (dob !== profileD.firebaseUser.dob) await updateDobUser();
     if (country !== profileD.firebaseUser.city) await updateCountryUser();
@@ -173,7 +174,7 @@ const Profile = ({ route, navigation }) => {
       };
       dispatch(setProfile(user));
     });
-    navigation.navigate("Home");
+    navigation.navigate("NewHomePage");
     console.log("Here HandleSubmit done");
   };
 
@@ -184,7 +185,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("NewHomePage")}
           >
             <Ionicons
               name="ios-arrow-back-sharp"
@@ -239,7 +240,11 @@ const Profile = ({ route, navigation }) => {
             {/* E mail */}
             <View style={[styles.searchContainer, styles.shadow]}>
               <Text style={styles.title4}>E mail</Text>
-              <TextInput style={styles.searchInput} editable={false} value={email} />
+              <TextInput
+                style={styles.searchInput}
+                editable={false}
+                value={email}
+              />
             </View>
             {/* Phone Number */}
             <View style={[styles.searchContainer, styles.shadow]}>
@@ -312,7 +317,7 @@ const Profile = ({ route, navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalHome(false);
-                  navigation.navigate("Home");
+                  navigation.navigate("NewHomePage");
                 }}
               >
                 <Text style={styles.textStyle}>Go Home</Text>

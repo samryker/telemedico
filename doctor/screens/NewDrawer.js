@@ -18,15 +18,12 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import * as WebBrowser from "expo-web-browser";
-// Screen
-import { HomePage, Doctors, IntakeForm } from "./index.js";
 import { signOutUser } from "../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
-
-import Header from "./Models/Header.js";
-import { MyNewTabs, MyTabs } from "./AppMain.js";
 import Consults from "./Main/ProfileScreens/Consults.js";
 import { useRoute } from "@react-navigation/native";
+import { HomeStackScreen, MyNewTabs } from "./AppMain";
+import Doctors from "./Main/Doctors";
 
 const mapState = ({ user }) => ({
   doctorD: user.doctorD,
@@ -59,10 +56,7 @@ const CustomDrawerContent = ({ navigation }) => {
     navigation.navigate("doctors");
   };
   const handleConsults = () => {
-    console.log(
-      "prevRoute =>",
-      prevRoute
-    );
+    console.log("prevRoute =>", prevRoute);
     if (prevRoute === "bt") {
       navigation.closeDrawer();
     } else {
@@ -221,30 +215,30 @@ const CustomDrawerContent = ({ navigation }) => {
 
 const Drawer = createDrawerNavigator();
 
-const Home = () => {
+const NewDrawer = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      initialRouteName="MyNewTabs"
+        initialRouteName="HomeStackScreen"
       style={styles.drawerNavStyle}
     >
-      <Drawer.Screen name="MyNewTabs" component={MyNewTabs} />
+      <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} />
+      {/* <Drawer.Screen name="MyNewTabs" component={MyNewTabs} />
       <Drawer.Screen name="doctors" component={Doctors} />
-      <Drawer.Screen name="consults" component={Consults} />
+      <Drawer.Screen name="consults" component={Consults} /> */}
     </Drawer.Navigator>
   );
 };
 
-export default Home;
+export default NewDrawer;
 
 const styles = StyleSheet.create({
   profileStyle: {
     padding: 0,
     margin: 0,
-    // backgroundColor: COLORS.primary,
     width: "100%",
     flexDirection: "column",
     justifyContent: "center",
@@ -252,7 +246,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   imgStyle: {
-    // backgroundColor: "red",
     width: 100,
     height: 80,
   },

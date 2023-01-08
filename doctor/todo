@@ -1,0 +1,4 @@
+npx expo start --dev-client
+
+eas build -p android --profile-preview
+

@@ -90,10 +90,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         errors: action.payload,
       };
+    case userTypes.RESET_AUTH_FORMS:
+      return {
+        ...state,
+        signInSuccess: false,
+        signUpSuccess: false,
+        resetPasswordSuccess: false,
+      };
     case userTypes.RESET_STATES:
       return {
         // currentUser: false,
-        
+        ...state,
         signInSuccess: false,
         signUpSuccess: false,
         resetPasswordSuccess: false,

@@ -40,6 +40,7 @@ const Describe = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((res) => {
+        console
         setPredictive(res.predictive_text);
       })
       .catch((error) => {

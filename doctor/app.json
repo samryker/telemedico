@@ -22,7 +22,6 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
-        
       },
       "usesIcloudStorage": true,
       "bundleIdentifier": "com.medipocket.world",
@@ -65,6 +64,11 @@
           }
         }
       ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e3a4b32c-0938-4794-a393-a453d0e4aaae"
+      }
     }
   }
 }

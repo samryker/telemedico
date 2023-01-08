@@ -33,6 +33,19 @@ const DoctorCardModel = (props) => {
       duration: duration,
     });
   };
+  console.log("doctor here :::::::::::");
+  console.log({
+    name,
+    desc,
+    country,
+    img,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+    duration,
+  });
   return (
     <View
       style={
@@ -44,10 +57,25 @@ const DoctorCardModel = (props) => {
           <View style={styles.doctorCard}>
             <View style={styles.doctorCardLeft}>
               <TouchableOpacity onPress={() => handleRedirect()}>
-                <Text style={[styles.cardTitle1,{ marginVertical: 3, fontSize: 16 }]}>{name}</Text>
+                <Text
+                  style={[
+                    styles.cardTitle1,
+                    { marginVertical: 3, fontSize: 16 },
+                  ]}
+                >
+                  {name}
+                </Text>
               </TouchableOpacity>
-              <Text style={[styles.cardTitle2, { marginVertical: 4, fontSize: 13 }]}>{desc}</Text>
-              <Text style={[styles.cardTitle2, { marginVertical: 4, fontSize: 13 }]}>{speciality}</Text>
+              <Text
+                style={[styles.cardTitle2, { marginVertical: 4, fontSize: 13 }]}
+              >
+                {desc}
+              </Text>
+              <Text
+                style={[styles.cardTitle2, { marginVertical: 4, fontSize: 13 }]}
+              >
+                {speciality}
+              </Text>
             </View>
             <TouchableOpacity
               onPress={() => handleRedirect()}

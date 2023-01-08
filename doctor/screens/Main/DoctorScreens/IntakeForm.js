@@ -16,7 +16,7 @@ import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
 
 const IntakeForm = ({ route, navigation }) => {
-  const { doctorName } = route.params;
+  const { doctorName } = route?.params || "doctor not specified";
   const [indicatorLoad, setIndicatorLoad] = useState(false);
   const [help, setHelp] = useState(false);
   const [help2, setHelp2] = useState(false);
@@ -302,7 +302,7 @@ const IntakeForm = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerSub}
-            // onPress={() => navigation.navigate("home")}
+            // onPress={() => navigation.navigate("NewHomePage")}
             onPress={() => setModalHome(true)}
           >
             <Image
@@ -1141,7 +1141,7 @@ const IntakeForm = ({ route, navigation }) => {
               style={styles.signup2}
               onPress={() => {
                 setHelp(false);
-                navigation.navigate("Home");
+                navigation.navigate("NewHomePage");
               }}
             >
               <Text style={styles.textStyle}>Back home</Text>
@@ -1212,7 +1212,7 @@ const IntakeForm = ({ route, navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalBack(false);
-                  navigation.navigate("Home");
+                  navigation.navigate("NewHomePage");
                 }}
               >
                 <Text style={styles.textStyle}>Back Home</Text>
@@ -1256,7 +1256,7 @@ const IntakeForm = ({ route, navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalHome(false);
-                  navigation.navigate("Home");
+                  navigation.navigate("NewHomePage");
                 }}
               >
                 <Text style={styles.textStyle}>Go Home</Text>

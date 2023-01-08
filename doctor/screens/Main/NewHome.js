@@ -12,6 +12,7 @@ import {
   FontAwesome,
   FontAwesome5,
   MaterialIcons,
+  Fontisto,
 } from "@expo/vector-icons";
 import {
   createDrawerNavigator,
@@ -19,14 +20,12 @@ import {
 } from "@react-navigation/drawer";
 import * as WebBrowser from "expo-web-browser";
 // Screen
-import { HomePage, Doctors, IntakeForm } from "./index.js";
-import { signOutUser } from "../redux/User/user.actions";
+import { HomePage, Doctors, IntakeForm } from "./../index.js";
+import { signOutUser } from "./../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
-
-import Header from "./Models/Header.js";
-import { MyNewTabs, MyTabs } from "./AppMain.js";
-import Consults from "./Main/ProfileScreens/Consults.js";
+import Consults from "./../Main/ProfileScreens/Consults.js";
 import { useRoute } from "@react-navigation/native";
+import { MyNewTabs } from "../AppMain.js";
 
 const mapState = ({ user }) => ({
   doctorD: user.doctorD,
@@ -34,6 +33,7 @@ const mapState = ({ user }) => ({
   errors: user.errors,
   prevRoute: user.prevRoute,
 });
+const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = ({ navigation }) => {
   const route = useRoute();
@@ -47,7 +47,7 @@ const CustomDrawerContent = ({ navigation }) => {
   }, [currentUser]);
 
   const handleHome = () => {
-    navigation.navigate("NewHomePage");
+    navigation.navigate("homePage");
   };
   const handleProfile = () => {
     navigation.navigate("profile");
@@ -59,10 +59,7 @@ const CustomDrawerContent = ({ navigation }) => {
     navigation.navigate("doctors");
   };
   const handleConsults = () => {
-    console.log(
-      "prevRoute =>",
-      prevRoute
-    );
+    console.log("prevRoute =>", prevRoute);
     if (prevRoute === "bt") {
       navigation.closeDrawer();
     } else {
@@ -219,26 +216,25 @@ const CustomDrawerContent = ({ navigation }) => {
   );
 };
 
-const Drawer = createDrawerNavigator();
-
-const Home = () => {
+const NewHome = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      initialRouteName="MyNewTabs"
+      initialRouteName="homeTab"
       style={styles.drawerNavStyle}
     >
-      <Drawer.Screen name="MyNewTabs" component={MyNewTabs} />
-      <Drawer.Screen name="doctors" component={Doctors} />
-      <Drawer.Screen name="consults" component={Consults} />
+      <Drawer.Screen name="homeTab" component={MyNewTabs} />
+      {/* <Drawer.Screen name="doctors" component={Doctors} /> */}
+      {/* <Drawer.Screen name="intakeForm" component={IntakeForm} /> */}
+      {/* <Drawer.Screen name="consults" component={Consults} /> */}
     </Drawer.Navigator>
   );
 };
 
-export default Home;
+export default NewHome;
 
 const styles = StyleSheet.create({
   profileStyle: {

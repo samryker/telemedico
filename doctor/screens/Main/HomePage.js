@@ -55,9 +55,12 @@ const DOCTOR_QUERY = gql`
 const HomePage = ({ navigation }) => {
   console.log("Home Screen");
   const dispatch = useDispatch();
-  const { userD, doctorD } = useSelector(mapState);
+  const { doctorD } = useSelector(mapState);
+  // const { userD, doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const [done, setDone] = useState(false);
+
+  const userD = { email: "ramykhweldi@gmail.com", username: "ramirez404" };
 
   // const doctorD = {
   //   firstName: "Dr. Bruce",

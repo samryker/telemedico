@@ -299,7 +299,7 @@ const Result = ({ route, navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("NewHomePage")}
           >
             <Image
               style={styles.imgStyle}
@@ -315,7 +315,7 @@ const Result = ({ route, navigation }) => {
           <View style={styles.imgStyle}></View>
           {/* <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate("home")}
+            onPress={() => navigation.navigate("NewHomePage")}
           >
             <Ionicons
               name="md-home-sharp"

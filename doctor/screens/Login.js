@@ -43,8 +43,8 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
-  const [email, onChangeEmail] = useState(""); // ramykhweldi@gmail.com //kunalkdas@outlook.com //samryker@gmailcom //priyanka@mymedipocket.com //info@thebollywoodbites.com
-  const [password, onChangepassword] = useState(""); // hello156 //Kepler@2209 //Cheena$11 //Cheena$1
+  const [email, onChangeEmail] = useState(""); // ramykhweldi@gmail.com //kunalkdas@outlook.com //samryker@gmailcom //priyanka@mymedipocket.com //info@thebollywoodbites.com //notrami21@gmail.com
+  const [password, onChangepassword] = useState(""); // hello156 //Kepler@2209 //Cheena$11 //Cheena$1 //Hekko23@
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -53,8 +53,9 @@ const Login = ({ navigation }) => {
   const [indicatorLoad, setIndicatorLoad] = useState(false);
 
   useEffect(() => {
+    console.log("signInSuccess ::: ", signInSuccess);
     if (signInSuccess) {
-      navigation.navigate("Home");
+      // navigation.navigate("NewHomePage");
       dispatch(resetAllAuthForms());
       ResetForm();
     }
@@ -93,6 +94,7 @@ const Login = ({ navigation }) => {
       setPasswordErrors("");
     }
     if (checking_form === "true") {
+      console.log("check_form is true");
       setIndicatorLoad(true);
       let emailValid = email.toLowerCase();
       emailValid = emailValid.replace(/\s/g, "");
@@ -100,6 +102,7 @@ const Login = ({ navigation }) => {
         variables: { email: emailValid, password: password },
       })
         .then((res) => {
+          console.log("inside then");
           let user = {
             username: "",
             email: emailValid,
@@ -108,25 +111,27 @@ const Login = ({ navigation }) => {
           console.log("current Token => ", token);
           console.log("User + Token => ", user, res.data.tokenAuth.token);
           if (res.data.tokenAuth.token) {
+            console.log("token Exist");
             dispatch(signInUser(user, res.data.tokenAuth.token));
             setIndicatorLoad(false);
           } else {
-            console.log(
-              "res                                                          "
-            );
-            console.log("res L:", res);
+            console.log("token Not Exist");
             setError(
               "we do not have any account with this email. try to signed up first"
             );
+            setIndicatorLoad(false);
           }
         })
         .catch((err) => {
+          console.log("inside catch");
           console.log("error line 156", err);
           setError(err);
           setIndicatorLoad(false);
         });
       console.log("DONE");
       setIndicatorLoad(false);
+    } else {
+      console.log("check_form is false");
     }
   };
   const handleForget = () => {

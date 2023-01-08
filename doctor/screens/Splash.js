@@ -41,9 +41,8 @@ const Splash = ({ navigation }) => {
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
           source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg.png?alt=media&token=a36ec316-b594-4a1a-9de5-104ed8ef3287",
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon1_2.png?alt=media&token=ae69a402-a571-4e65-8117-1d154b377b2f",
           }}
-          // source={require('../assets/bg.png')}
         />
       );
     if (index === 1)
@@ -51,9 +50,8 @@ const Splash = ({ navigation }) => {
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
           source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg1.png?alt=media&token=6491998f-fdb1-4db2-965b-3e6a2e5c4ced",
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon2_2.png?alt=media&token=ab830a38-b058-426e-a285-d62ee38ef24a",
           }}
-          // source={require('../assets/bg1.png')}
         />
       );
     if (index === 2)
@@ -61,80 +59,109 @@ const Splash = ({ navigation }) => {
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
           source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg2.png?alt=media&token=1751b966-0977-4ab6-983f-446dd94bc6d0",
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon3_2.png?alt=media&token=7183c1aa-3466-430b-99fe-d04bd9ceba73",
           }}
-          // source={require('../assets/bg2.png')}
+        />
+      );
+    if (index === 3)
+      return (
+        <ImageBackground
+          style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon4_2.png?alt=media&token=76167cd2-7b03-409d-a8f3-598b898c587a",
+          }}
         />
       );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{ flex: 1 }}>
-        <View style={styles.flexContainer}>
-          <Image
-            style={styles.logo}
-            source={images.logo_white}
-            resizeMode="contain"
-          />
-          <View style={{ height: 250, paddingTop: 10, paddingHorizontal: 0 }}>
-            <Swiper
-              style={styles.wrapper}
-              activeDot={
-                <View
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    width: 8,
-                    height: 8,
-                    borderRadius: 4,
-                    marginLeft: 3,
-                    marginRight: 3,
-                    marginTop: 3,
-                    marginBottom: 3,
-                  }}
-                />
-              }
-              showsButtons={false}
-              onIndexChanged={(i) => setIndex(i)}
-            >
-              <View style={styles.slide}>
-                <Text style={styles.slideTitle}>Telehealth</Text>
-                <Text style={styles.slideText}>
-                  Affordable, Cross Border Care Access best qulity doctors cross
-                  border 24 x 7
-                </Text>
-              </View>
-              <View style={styles.slide}>
-                <Text style={styles.slideTitle}>Dr. AI</Text>
-                <Text style={styles.slideText}>
-                  Personalized AI Powered Symptom Checker Check your symtoms on
-                  a medically designed engineering powered platform 24 x 7 for
-                  FREE
-                </Text>
-              </View>
-              <View style={styles.slide}>
-                <Text style={styles.slideTitle}>MyHealthPocket</Text>
-                <Text style={styles.slideText}>
-                  Carry your health records in pocket Get in control of your
-                  health records by storing, accessing sharing whenever and
-                  however you want.
-                </Text>
-              </View>
-            </Swiper>
-          </View>
-          <View>
-            <TouchableOpacity onPress={RedirectLogin}>
-              <Text style={styles.u_btn}>LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={RedirectRegister}>
-              <Text style={styles.u_btn2}>SIGN UP</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.already} onPress={handleForget}>
-              {/* <Text style={styles.label2}>Forget your Password?</Text> */}
-            </TouchableOpacity>
-          </View>
+      {/* <ScrollView style={{ flex: 1 }}> */}
+      <View style={styles.flexContainer}>
+        <Image
+          style={styles.logo}
+          source={images.logo_white}
+          resizeMode="contain"
+        />
+        <View style={{ height: 200, paddingTop: 10, paddingHorizontal: 0 }}>
+          <Swiper
+            dot={
+              <View
+                style={{
+                  backgroundColor: "rgba(255,255,255,.5)",
+                  width: 8,
+                  height: 8,
+                  borderRadius: 4,
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginTop: 3,
+                  marginBottom: 3,
+                }}
+              />
+            }
+            activeDot={
+              <View
+                style={{
+                  backgroundColor: COLORS.primary,
+                  width: 8,
+                  height: 8,
+                  borderRadius: 4,
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginTop: 3,
+                  marginBottom: 3,
+                }}
+              />
+            }
+            showsButtons={false}
+            onIndexChanged={(i) => setIndex(i)}
+          >
+            <View style={styles.slide}>
+              <Text style={styles.slideTitle}>Second Opinion USA</Text>
+              <Text style={styles.slideText}>
+                Consult from India the world's best hospitals and specialists in
+                USA
+              </Text>
+            </View>
+            <View style={styles.slide}>
+              <Text style={styles.slideTitle}>Treatment In USA</Text>
+              <Text style={styles.slideText}>
+                At best USA hospitals, MayoClinic, MD Anderson, John Hopkins,
+                Boston Children Hospital
+              </Text>
+            </View>
+            <View style={styles.slide}>
+              <Text style={styles.slideTitle}>Surrogacy In USA</Text>
+              <Text style={styles.slideText}>
+                Best Success rate, gender selection, genetic screening, USA
+                passport
+              </Text>
+            </View>
+            <View style={styles.slide}>
+              <Text style={styles.slideTitle}>DR. AI</Text>
+              <Text style={styles.slideText}>
+                Check your symptoms 24x7 for FREE with personalized AI powered
+                medically designed symptom checker
+              </Text>
+            </View>
+          </Swiper>
         </View>
-      </ScrollView>
+        <View>
+          <TouchableOpacity onPress={RedirectLogin}>
+            <Text style={styles.u_btn}>LOGIN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={RedirectRegister}>
+            <Text style={styles.u_btn2}>SIGN UP</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.already} onPress={handleForget}>
+            <Text style={styles.label2}>Forget your Password?</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("MyNewTabs")}>
+            <Text style={styles.u_btn}>New Home</Text>
+          </TouchableOpacity> */}
+        </View>
+      </View>
+      {/* </ScrollView> */}
       {renderBg()}
     </SafeAreaView>
   );
@@ -146,18 +173,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "gray",
-    // backgroundColor: COLORS.primary,
-    // position: "relative",
-    // color: COLORS.primary,
-    //   backgroundColor: "transparent",
   },
   flexContainer: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
-    // backgroundColor: "transparent",
+    width: "100%",
+    height: "100%",
+    paddingBottom: 20,
   },
   logo: {
     width: 150,
@@ -228,11 +253,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     letterSpacing: 0.3,
-    color: "black",
+    color: "#fff",
     textDecorationStyle: "solid",
     textDecorationColor: COLORS.greyColor,
     marginBottom: 10,
     marginLeft: 10,
+    marginTop: 20,
   },
   already: {
     flexDirection: "row",
@@ -254,25 +280,22 @@ const styles = StyleSheet.create({
   },
   // Slider
   slide: {
-    // height: 200,
-    // maxWidth: "100%",
-    // alignItems: "center",
-    // paddingHorizontal: 5,
+    justifyContent: "center",
   },
   slideTitle: {
     fontSize: 26,
     fontWeight: "bold",
-    color: "rgba(256,256,256,0.7)",
+    color: "rgba(256,256,256,1)",
     textAlign: "center",
     marginVertical: 20,
   },
   slideText: {
-    color: "rgba(256,256,256,0.5)",
+    color: "rgba(256,256,256,1)",
     fontSize: 13,
     fontWeight: "600",
     textAlign: "center",
     lineHeight: 18,
     marginBottom: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: "10%",
   },
 });

@@ -68,7 +68,8 @@ const Appointment = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.doctorBtnStyle2, styles.shadow2]}
             onPress={() =>
-              navigation.navigate("payment", {
+              // navigation.navigate("payment", {
+              navigation.navigate("intakeForm", {
                 name: name,
                 desc: desc,
                 img: img,

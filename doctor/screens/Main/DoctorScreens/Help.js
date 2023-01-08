@@ -460,7 +460,7 @@ const Help = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerSub}
-            // onPress={() => navigation.navigate("Home")}
+            // onPress={() => navigation.navigate("NewHomePage")}
             onPress={() => setModalHome(true)}
           >
             <Image
@@ -1310,7 +1310,7 @@ const Help = ({ navigation }) => {
               style={styles.signup2}
               onPress={() => {
                 setHelp(false);
-                navigation.navigate("Home");
+                navigation.navigate("NewHomePage");
               }}
             >
               <Text style={styles.textStyle}>Ok</Text>
@@ -1381,7 +1381,7 @@ const Help = ({ navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalBack(false);
-                  navigation.navigate("Home");
+                  navigation.navigate("NewHomePage");
                 }}
               >
                 <Text style={styles.textStyle}>Back Home</Text>
@@ -1425,7 +1425,7 @@ const Help = ({ navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalHome(false);
-                  navigation.navigate("Home");
+                  navigation.navigate("NewHomePage");
                 }}
               >
                 <Text style={styles.textStyle}>Go Home</Text>

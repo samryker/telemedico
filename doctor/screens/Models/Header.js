@@ -4,7 +4,7 @@ import IconFeather from "react-native-vector-icons/Feather";
 import { useSelector } from "react-redux";
 import { icons, images } from "../../constants";
 import { Ionicons } from "@expo/vector-icons";
-import { useDrawerStatus } from '@react-navigation/drawer';
+import { useDrawerStatus } from "@react-navigation/drawer";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -34,7 +34,7 @@ const Header = (props) => {
       )}
       <TouchableOpacity
         style={styles.headerSub}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("NewHomePage")}
       >
         <Image
           style={styles.imgStyle}
@@ -46,13 +46,13 @@ const Header = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.headerSub}
-        onPress={() => navigation.openDrawer()}
+        // onPress={() => navigation.openDrawer()}
         // onPress={() => console.log("Navigation: ", navigation)}
         // onPress={() => navigation.getParent().openDrawer()
       >
         <IconFeather
           name="menu"
-          size={20}
+          size={25}
           color="black"
           style={styles.icon_style}
         />

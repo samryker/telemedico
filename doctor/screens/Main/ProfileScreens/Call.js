@@ -58,7 +58,7 @@ const Call = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button1, styles.signup]}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("NewHomePage")}
           >
             <Text style={styles.signupText}>Back Home</Text>
           </TouchableOpacity>

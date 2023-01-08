@@ -150,6 +150,7 @@ const DoctorsList = ({ route, navigation }) => {
     };
   }, []);
   useEffect(() => {
+    console.log("newDoctors => ", newDoctors);
     if (data && !newDoctors) {
       getDoctors();
       setDoctors(
