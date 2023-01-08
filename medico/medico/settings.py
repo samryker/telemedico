@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    
 
 
 ]
@@ -194,3 +195,23 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+CORS_ALLOWED_ORIGINS = [
+    "https://medipocket.world",
+    "https://app.medipocket.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:3000",
+    "https://main.d2zgh6ymprehn7.amplifyapp.com"
+]
+CORS_ORIGIN_ALLOW_ALL = False
+
+# CORS_ORIGIN_WHITELIST = (
+
+#     "https://medipocket.world",
+#     "https://app.medipocket.com",
+#     "http://localhost:8080",
+#     "http://127.0.0.1:3000",
+#     "https://main.d2zgh6ymprehn7.amplifyapp.com"
+
+
+# )

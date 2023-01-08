@@ -4,7 +4,7 @@ from medico.settings import EMAIL_HOST_USER
 from .forms import PatientIntakeForm
 from .models import *
 from django.http  import HttpResponse,HttpResponseBadRequest
-import json
+import json 
 from django.core.mail import send_mail
 from django.conf import settings
 from .serializers import *
@@ -40,6 +40,7 @@ from .ack_gen import main
 
 
 class Entry(APIView):
+
 
 
     def post(self, request):
