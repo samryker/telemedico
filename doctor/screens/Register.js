@@ -181,6 +181,7 @@ const Register = ({ navigation }) => {
           );
           if (!res.data.register.errors) {
             dispatch(signUpUser(user, res.data.register.token));
+            setDoneRegister(true);
           }
           setIndicatorLoad(false);
         })
@@ -354,7 +355,7 @@ const Register = ({ navigation }) => {
         transparent={true}
         visible={doneRegister}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          // Alert.alert("Modal has been closed.");
           setDoneRegister(!doneRegister);
         }}
       >

@@ -90,6 +90,13 @@ const IntakeForm = ({ route, navigation }) => {
   const [q1, setQ1] = useState("");
   const [q2, setQ2] = useState("");
   const [q3, setQ3] = useState("");
+  // Request
+  const [request1, setRequest1] = useState(false);
+  const [request2, setRequest2] = useState(false);
+  const [request3, setRequest3] = useState(false);
+  const [request4, setRequest4] = useState(false);
+  const [request5, setRequest5] = useState(false);
+  const [request_other, setRequest_other] = useState("");
   // Appointment
   const [appointment1, setAppointment1] = useState(false);
   const [appointment2, setAppointment2] = useState(false);
@@ -156,6 +163,22 @@ const IntakeForm = ({ route, navigation }) => {
     setF5_5_3(true);
     setF5_5_4(false);
   };
+  // Request
+  const handleRequest1 = () => {
+    setRequest1(!request1);
+  };
+  const handleRequest2 = () => {
+    setRequest2(!request2);
+  };
+  const handleRequest3 = () => {
+    setRequest3(!request3);
+  };
+  const handleRequest4 = () => {
+    setRequest4(!request4);
+  };
+  const handleRequest5 = () => {
+    setRequest5(!request5);
+  };
   // Appoitment
   const handleAppointment1 = () => {
     setAppointment1(!appointment1);
@@ -207,6 +230,15 @@ const IntakeForm = ({ route, navigation }) => {
     if (f5_5_1) smoke = "Never";
     if (f5_5_2) smoke = "Stopped";
     if (f5_5_3) smoke = "Daily";
+    // request
+    let requestService = "";
+    if (request1) requestService += "Expert Consultation";
+    if (request2) requestService += "Second Opinion";
+    if (request3) requestService += "Treatment In USA";
+    if (request4) requestService += "Surrogate USA";
+    if (request5) requestService += request_other;
+
+    // appointment
     let appointment = "";
     if (appointment1) appointment += "ASAP";
     if (appointment2) appointment += "4-7 Days";
@@ -218,19 +250,12 @@ const IntakeForm = ({ route, navigation }) => {
       gender.length === 0 ||
       phone.length === 0 ||
       f4.length === 0 ||
-      father.length === 0 ||
-      mother.length === 0 ||
-      brother.length === 0 ||
-      sister.length === 0 ||
       medication.length === 0 ||
-      allergies.length === 0 ||
-      exercices.length === 0 ||
-      alcohol.length === 0 ||
-      smoke.length === 0 ||
       f3.length === 0 ||
       q1.length === 0 ||
       q2.length === 0 ||
       q3.length === 0 ||
+      requestService.length === 0 ||
       appointment.length === 0
     ) {
       setHelp2(true);
@@ -250,18 +275,19 @@ const IntakeForm = ({ route, navigation }) => {
           gender: gender,
           phone_number: phone,
           patient_medical_history: f4,
-          father: father,
-          mother: mother,
-          brother: brother,
-          sister: sister,
+          father: "blank",
+          mother: "blank",
+          brother: "blank",
+          sister: "blank",
           comments: "",
           current_medication: medication,
-          list_allergies: allergies,
-          healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
+          list_allergies: "blank",
+          healthy_unhealthy: "blank",
           reason_for_consultation: f3,
           question1: q1,
           question2: q2,
           question3: q3,
+          requestService: requestService,
           appointment: appointment,
         }),
       })
@@ -316,8 +342,7 @@ const IntakeForm = ({ route, navigation }) => {
           <View style={{ width: 20 }}></View>
         </View>
         <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle}>Telemedicine Patient</Text>
-          <Text style={styles.cardTitle}>Intake Form</Text>
+          <Text style={styles.cardTitle}>Medical Intake Form</Text>
         </View>
         {/* Consultation for */}
         <View style={[styles.card, styles.shadow1]}>
@@ -378,6 +403,130 @@ const IntakeForm = ({ route, navigation }) => {
               />
               {phoneError.length === 0 ? null : (
                 <Text style={styles.error}>{phoneError}</Text>
+              )}
+            </View>
+          </View>
+        </View>
+        {/* Requesting USA MEdical services for */}
+        <View style={[styles.card, styles.shadow1]}>
+          <Text style={styles.cardTitle2}>
+            Requesting USA medical services for:
+          </Text>
+          {/* Form */}
+          <View style={styles.inputsContainer}>
+            {/* Exercise */}
+            <View style={styles.inputContainer}>
+              {/* Line 1 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={request1}
+                    onValueChange={handleRequest1}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Expert Consultation
+                  </Text>
+                </View>
+              </View>
+              {/* Line 2 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={request2}
+                    onValueChange={handleRequest2}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Second Opinion
+                  </Text>
+                </View>
+              </View>
+              {/* Line 3 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={request3}
+                    onValueChange={handleRequest3}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Treatment In USA
+                  </Text>
+                </View>
+              </View>
+              {/* Line 4 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={request4}
+                    onValueChange={handleRequest4}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Surrogate USA
+                  </Text>
+                </View>
+              </View>
+              {/* Line 5 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={request5}
+                    onValueChange={handleRequest5}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Other
+                  </Text>
+                </View>
+              </View>
+              {request5 && (
+                <>
+                  <TextInput
+                    style={styles.input}
+                    value={request_other}
+                    onChangeText={setRequest_other}
+                    placeholder="Please type your requested service here"
+                    placeholderTextColor={"grey"}
+                    keyboardType="default"
+                  />
+                </>
               )}
             </View>
           </View>
@@ -683,11 +832,9 @@ const IntakeForm = ({ route, navigation }) => {
           </View>
         </View>
         {/* Patient Family History */}
-        <View style={[styles.card, styles.shadow1]}>
+        {/* <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Patient Family History</Text>
-          {/* Form */}
           <View style={styles.inputsContainer}>
-            {/* Father */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>
                 Please tell if your family member suffer(ed) from any health
@@ -703,7 +850,6 @@ const IntakeForm = ({ route, navigation }) => {
                 keyboardType="default"
               />
             </View>
-            {/* Mother */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>Mother</Text>
               <TextInput
@@ -715,7 +861,6 @@ const IntakeForm = ({ route, navigation }) => {
                 keyboardType="default"
               />
             </View>
-            {/* Brother (s) */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>Brother (s)</Text>
               <TextInput
@@ -727,7 +872,6 @@ const IntakeForm = ({ route, navigation }) => {
                 keyboardType="default"
               />
             </View>
-            {/* Sister (s) */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>Sister (s)</Text>
               <TextInput
@@ -740,7 +884,7 @@ const IntakeForm = ({ route, navigation }) => {
               />
             </View>
           </View>
-        </View>
+        </View> */}
         {/* Current Medications */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Current Medications</Text>
@@ -760,9 +904,8 @@ const IntakeForm = ({ route, navigation }) => {
           </View>
         </View>
         {/* Allergies */}
-        <View style={[styles.card, styles.shadow1]}>
+        {/* <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Allergies</Text>
-          {/* Form */}
           <View style={styles.inputsContainer}>
             <View style={styles.inputContainer}>
               <TextInput
@@ -772,20 +915,16 @@ const IntakeForm = ({ route, navigation }) => {
                 placeholder="Any Food, Medicine, Seasonal allergies"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-                // multiline={true}
               />
             </View>
           </View>
-        </View>
+        </View> */}
         {/* Healthy & Unhealthy Habits */}
-        <View style={[styles.card, styles.shadow1]}>
+        {/* <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Healthy & Unhealthy Habits</Text>
-          {/* Form */}
           <View style={styles.inputsContainer}>
-            {/* Exercise */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>Exercise</Text>
-              {/* Line 2 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -805,7 +944,6 @@ const IntakeForm = ({ route, navigation }) => {
                   </Text>
                 </View>
               </View>
-              {/* Line 1 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -826,10 +964,8 @@ const IntakeForm = ({ route, navigation }) => {
                 </View>
               </View>
             </View>
-            {/* Alcohol Consumption */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>Alcohol Consumption</Text>
-              {/* Line 1 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -849,7 +985,6 @@ const IntakeForm = ({ route, navigation }) => {
                   </Text>
                 </View>
               </View>
-              {/* Line 2 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -869,7 +1004,6 @@ const IntakeForm = ({ route, navigation }) => {
                   </Text>
                 </View>
               </View>
-              {/* Line 3 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -890,10 +1024,8 @@ const IntakeForm = ({ route, navigation }) => {
                 </View>
               </View>
             </View>
-            {/* Do you smoke? */}
             <View style={styles.inputContainer}>
               <Text style={styles.cardTitle4}>Smoke</Text>
-              {/* Line 1 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -913,7 +1045,6 @@ const IntakeForm = ({ route, navigation }) => {
                   </Text>
                 </View>
               </View>
-              {/* Line 2 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -933,7 +1064,6 @@ const IntakeForm = ({ route, navigation }) => {
                   </Text>
                 </View>
               </View>
-              {/* Line 3 */}
               <View style={styles.inputContainer22}>
                 <View style={styles.checkbox_container}>
                   <Checkbox
@@ -955,7 +1085,7 @@ const IntakeForm = ({ route, navigation }) => {
               </View>
             </View>
           </View>
-        </View>
+        </View> */}
         {/* Reason for Consultation */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>
@@ -1021,6 +1151,7 @@ const IntakeForm = ({ route, navigation }) => {
             </View>
           </View>
         </View>
+
         {/* Healthy & Unhealthy Habits */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>

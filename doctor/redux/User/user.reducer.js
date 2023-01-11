@@ -2,6 +2,8 @@ import userTypes from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: false,
+  userData: null,
+  userDocId: null,
   signInSuccess: false,
   signUpSuccess: false,
   resetPasswordSuccess: false,
@@ -65,6 +67,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         prevRoute: action.payload,
+      };
+    case userTypes.FETCH_USER:
+      return {
+        ...state,
+        userData: action.payload,
+      };
+    case userTypes.SET_CURRENT_USER_DOC_ID:
+      return {
+        ...state,
+        userDocId: action.payload,
       };
 
     // TOKEN

@@ -292,6 +292,7 @@ const AppMain = ({ isLogin, userData }) => {
   const { currentUser, signInSuccess, token, errors } = useSelector(mapState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
   const [waiting, setWating] = useState(true);
 
@@ -366,7 +367,7 @@ const AppMain = ({ isLogin, userData }) => {
             {/* <Stack.Screen name="Home" component={Home} /> */}
             {/* <Stack.Screen name="NewHome" component={NewHome} /> */}
 
-            {/* <Stack.Screen name="home" component={NewDrawer} /> */}
+            <Stack.Screen name="home" component={NewDrawer} />
             <Stack.Screen name="MyNewTabs" component={MyNewTabs} />
             <Stack.Screen name="Hospitals" component={Hospitals} />
             <Stack.Screen name="Surrogacy" component={Surrogacy} />

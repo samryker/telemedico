@@ -193,7 +193,7 @@ const CustomDrawerContent = ({ navigation }) => {
               size={20}
               color="transparent"
             />
-            <Text style={styles.itemText2}>health@app.medipocket.world</Text>
+            <Text style={styles.itemText2}>health@mymedipocket.com</Text>
           </View>
           {/* Horizontal Line */}
           {/* <View style={styles.itemBorderTop}></View> */}
@@ -222,13 +222,15 @@ const NewDrawer = () => {
         headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-        initialRouteName="HomeStackScreen"
+      initialRouteName="MyNewTabs"
       style={styles.drawerNavStyle}
     >
-      <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} />
-      {/* <Drawer.Screen name="MyNewTabs" component={MyNewTabs} />
+      <Drawer.Screen name="MyNewTabs" component={MyNewTabs} />
+      {/* <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} />
       <Drawer.Screen name="doctors" component={Doctors} />
       <Drawer.Screen name="consults" component={Consults} /> */}
+      {/*
+       */}
     </Drawer.Navigator>
   );
 };

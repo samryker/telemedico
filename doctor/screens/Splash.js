@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,11 +13,46 @@ import {
 import { COLORS, images } from "../constants";
 import { useDispatch } from "react-redux";
 import { ResetStates } from "../redux/User/user.actions";
-import Swiper from "react-native-swiper";
+
+const DEVICE_WIDTH = Dimensions.get("window").width;
+const DEVICE_HEIGHT = Dimensions.get("window").height;
+
+const pages = [
+  {
+    id: 0,
+    url: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon4_2.png?alt=media&token=76167cd2-7b03-409d-a8f3-598b898c587a",
+    title1: "DR. AI",
+    title2:
+      "Check your symptoms 24x7 for FREE with personalized AI powered medically designed symptom checker",
+  },
+  {
+    id: 1,
+    url: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon1_2.png?alt=media&token=ae69a402-a571-4e65-8117-1d154b377b2f",
+    title1: "Second Opinion USA",
+    title2:
+      "Consult from India the world's best hospitals and specialists in USA",
+  },
+  {
+    id: 2,
+    url: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon2_2.png?alt=media&token=ab830a38-b058-426e-a285-d62ee38ef24a",
+    title1: "Treatment In USA",
+    title2:
+      "At best USA hospitals, MayoClinic, MD Anderson, John Hopkins, Boston Children Hospital",
+  },
+  {
+    id: 3,
+    url: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fon3_2.png?alt=media&token=7183c1aa-3466-430b-99fe-d04bd9ceba73",
+    title1: "Surrogacy In USA",
+    title2:
+      "Best Success rate, gender selection, genetic screening, USA passport",
+  },
+];
 
 const Splash = ({ navigation }) => {
   console.log("Splash Screen");
+  const scrollRef = useRef();
   const [index, setIndex] = useState(0);
+  const [currentTitle, setCurrentTitle] = useState(pages[0]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,10 +109,39 @@ const Splash = ({ navigation }) => {
       );
   };
 
+  const handleScroll = (e) => {
+    if (e.nativeEvent.contentOffset.x === 0) setCurrentTitle(pages[0]);
+    if (e.nativeEvent.contentOffset.x === DEVICE_WIDTH)
+      setCurrentTitle(pages[1]);
+    if (e.nativeEvent.contentOffset.x === 2 * DEVICE_WIDTH)
+      setCurrentTitle(pages[2]);
+    if (e.nativeEvent.contentOffset.x === 3 * DEVICE_WIDTH)
+      setCurrentTitle(pages[3]);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (currentTitle.id <= 2) {
+        scrollRef.current?.scrollTo({
+          x: (currentTitle.id + 1) * DEVICE_WIDTH,
+          animated: true,
+        });
+        setCurrentTitle(pages[currentTitle.id + 1]);
+      } else {
+        scrollRef.current?.scrollTo({
+          x: 0,
+          animated: true,
+        });
+        setCurrentTitle(pages[0]);
+      }
+      console.log("This will run every second!", currentTitle.id);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [currentTitle]);
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* <ScrollView style={{ flex: 1 }}> */}
-      <View style={styles.flexContainer}>
+      {/* <View style={styles.flexContainer}>
         <Image
           style={styles.logo}
           source={images.logo_white}
@@ -156,13 +220,52 @@ const Splash = ({ navigation }) => {
           <TouchableOpacity style={styles.already} onPress={handleForget}>
             <Text style={styles.label2}>Forget your Password?</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity onPress={() => navigation.navigate("MyNewTabs")}>
-            <Text style={styles.u_btn}>New Home</Text>
-          </TouchableOpacity> */}
         </View>
+      </View> */}
+      <ScrollView
+        ref={scrollRef}
+        style={styles.scrollView}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        overScrollMode="never"
+        pagingEnabled
+        decelerationRate={0.85}
+        snapToInterval={DEVICE_WIDTH}
+        bounces={true}
+        onScroll={handleScroll}
+      >
+        {pages.map((item, index) => (
+          <View key={index} style={styles.pageContainer}>
+            <Image source={{ uri: item.url }} style={styles.pageImage} />
+          </View>
+        ))}
+      </ScrollView>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={images.logo_white}
+          resizeMode="contain"
+        />
       </View>
-      {/* </ScrollView> */}
-      {renderBg()}
+      <View style={styles.btnLast}>
+        <View style={styles.pageTitleContainer}>
+          <Text style={styles.slideTitle}>{currentTitle.title1}</Text>
+          <Text style={styles.slideText}>{currentTitle.title2}</Text>
+        </View>
+        <TouchableOpacity style={styles.u_btnContainer} onPress={RedirectLogin}>
+          <Text style={styles.u_btn}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.u_btnContainer}
+          onPress={RedirectRegister}
+        >
+          <Text style={styles.u_btn2}>SIGN UP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.already} onPress={handleForget}>
+          <Text style={styles.label2}>Forget your Password?</Text>
+        </TouchableOpacity>
+      </View>
+      {/* {renderBg()} */}
     </SafeAreaView>
   );
 };
@@ -172,7 +275,7 @@ export default Splash;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gray",
+    backgroundColor: "#40e0d0",
   },
   flexContainer: {
     flex: 1,
@@ -184,10 +287,17 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingBottom: 20,
   },
+  logoContainer: {
+    position: "absolute",
+    top: 50,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   logo: {
-    width: 150,
-    height: 150,
-    marginTop: 20,
+    width: 120,
+    height: 120,
+    resizeMode: "contain",
   },
   betweenLogin: {
     flexDirection: "row",
@@ -216,6 +326,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     width: 300,
   },
+  u_btnContainer: {
+    width: "85%",
+  },
   u_btn: {
     backgroundColor: COLORS.blueColor,
     color: "black",
@@ -228,9 +341,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "transparent",
-    marginVertical: 10,
+    marginVertical: 5,
     fontWeight: "600",
-    width: 300,
+    // width: "80%",
   },
   u_btn2: {
     backgroundColor: "transparent",
@@ -244,9 +357,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 35,
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 5,
     fontWeight: "600",
-    width: 300,
+    // width: "80%",
   },
   label2: {
     textAlign: "left",
@@ -256,14 +369,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     textDecorationStyle: "solid",
     textDecorationColor: COLORS.greyColor,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginTop: 20,
+    marginLeft: 5,
   },
   already: {
+    width: "85%",
     flexDirection: "row",
     justifyContent: "flex-start",
-    marginBottom: 20,
+    marginBottom: 30,
+    marginTop: 15,
   },
   // background
   bgcontainer: {
@@ -287,15 +400,42 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "rgba(256,256,256,1)",
     textAlign: "center",
-    marginVertical: 20,
+    marginBottom: 10,
   },
   slideText: {
     color: "rgba(256,256,256,1)",
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "600",
     textAlign: "center",
     lineHeight: 18,
-    marginBottom: 5,
     paddingHorizontal: "10%",
+    marginBottom: 20,
+  },
+  // page
+  pageContainer: {
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    backgroundColor: "#40e0d0",
+  },
+  pageImage: {
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    zIndex: 1,
+  },
+  pageTitleContainer: {
+    width: "100%",
+  },
+  pageTitle1: {
+    fontSize: 24,
+  },
+  pageTitle2: {
+    fontSize: 24,
+  },
+  btnLast: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

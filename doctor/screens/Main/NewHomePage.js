@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -10,6 +10,15 @@ import {
 import PrimaryButton from "../Models/PrimaryButton";
 import TitleModal from "../Models/TitleModal";
 import IconFeather from "react-native-vector-icons/Feather";
+import {
+  getCurrentUser,
+  signInUser,
+  signOutUser,
+  signUpUser,
+} from "../../redux/User/user.actions";
+import { useDispatch, useSelector } from "react-redux";
+import PrimaryButton2 from "../Models/PrimaryButton2";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 const icons = [
   {
@@ -147,27 +156,27 @@ const hospitals2 = [
 ];
 const doctors = [
   {
-    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fdoctors%2Fdoctor1.png?alt=media&token=1fc16156-6b59-4803-bff3-7cd926f4c1e9",
+    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20A_%20Eli%20Gabayan.png?alt=media&token=ecfe7fa3-16fe-480e-8091-2516ee7cfcf2",
     name: "Dr. A. Eli Gabayan",
-    spec: "Surgeon",
-    place: "Boston, USA",
+    spec: "Hematology/ Oncology",
+    place: "Los Angeles, USA",
   },
   {
-    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fdoctors%2Fdoctor2.png?alt=media&token=8714e194-a2cf-4dd3-8030-20e8128475a7",
+    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Sam%20Najmabadi.png?alt=media&token=6a6d2d74-f2f1-4fb1-9751-00a564789b6c",
     name: "Dr. Sam Najmabadi",
-    spec: "Therapist",
-    place: "San Francisco, USA",
+    spec: "Fertility Expert",
+    place: "California, USA",
   },
   {
-    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fdoctors%2Fdoctor3.png?alt=media&token=e92b5f62-2dfb-4a07-8579-607fa84f94fc",
+    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Raj%20Kanodia.png?alt=media&token=8190e2f4-da2b-4008-a6bf-dd156cffa0b3",
     name: "Dr. Raj Kanodia",
-    spec: "Dentist",
-    place: "New York, USA",
+    spec: "Plastic Surgery, Rhinoplasty",
+    place: "Beverly Hills, USA",
   },
   {
-    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2Fdoctors%2Fdoctor4.png?alt=media&token=f2cad090-f55b-4e76-8d2c-c0e21937d9f7",
-    name: "Dr. John Doe",
-    spec: "Therapist",
+    img: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20David%20Berz.png?alt=media&token=51d3816c-cd55-4735-ae1e-85ce3435dd1e",
+    name: "Dr. David Berz",
+    spec: "Hematology/ Oncology",
     place: "Los Angeles, USA",
   },
 ];
@@ -248,7 +257,28 @@ const specialities = [
   },
 ];
 
-const NewHomePage = ({ navigation }) => {
+const mapState = ({ user }) => ({
+  userData: user.userData,
+  userDocId: user.userDocId,
+});
+
+const NewHomePage = () => {
+  const { userData, userDocId } = useSelector(mapState);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const [userUpdated, setUserUpdated] = useState(false);
+  useEffect(() => {
+    setUserUpdated(false);
+  }, []);
+
+  useEffect(() => {
+    if (!userData || (isFocused && !userUpdated)) {
+      dispatch(getCurrentUser(userDocId));
+      setUserUpdated(true);
+    }
+  }, [userData, userDocId, isFocused, userUpdated]);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
@@ -267,10 +297,9 @@ const NewHomePage = ({ navigation }) => {
               />
             </View>
           </View>
-          {/* <View style={{ width: 20 }} /> */}
           <TouchableOpacity
             style={{ paddingRight: 10 }}
-            // onPress={() => navigation.toggleDrawer()}
+            onPress={() => navigation.toggleDrawer()}
           >
             <IconFeather
               name="menu"
@@ -472,7 +501,7 @@ const NewHomePage = ({ navigation }) => {
           ))}
         </ScrollView>
         {/* Primary Btn */}
-        <PrimaryButton
+        <PrimaryButton2
           icon="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2FprimaryButton%2FheartAnalIcon.png?alt=media&token=0e49d149-556f-4b09-b635-d08364f3d0a5"
           name="More USA Doctors"
           navigation={navigation}
@@ -766,8 +795,8 @@ const styles = StyleSheet.create({
   doctorIcon: {
     width: 80,
     height: 80,
-    resizeMode: "contain",
-    borderRadius: 5,
+    // resizeMode: "contain",
+    borderRadius: 15,
     marginBottom: 5,
   },
   // surrogacy

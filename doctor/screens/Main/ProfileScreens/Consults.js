@@ -17,7 +17,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import Header from "../../Models/Header";
 import { getPrevRoute } from "../../../redux/User/user.actions";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -49,9 +49,10 @@ const CONSULT_QUERY = gql`
   }
 `;
 
-const Consults = ({ route, navigation }) => {
+const Consults = ({ route }) => {
   const prev = route?.params?.prev;
   console.log("Prev => ", prev);
+  const navigation = useNavigation();
   const { userD } = useSelector(mapState);
   const { data, loading, refetch } = useQuery(CONSULT_QUERY);
   const [initialLoading, setInitialLoading] = useState(false);
@@ -161,6 +162,7 @@ const Consults = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
       <View style={styles.titleConatiner}>
+        <View style={{ width: 25 }} />
         <Text style={styles.title1}>My Consults</Text>
         <TouchableOpacity onPress={buttonPreesed}>
           <FontAwesome name="refresh" size={24} color="green" />

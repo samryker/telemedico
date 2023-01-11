@@ -31,11 +31,13 @@ import {
 const mapState = ({ user }) => ({
   userD: user.userD,
   profileD: user.profileD,
+  userData: user.userData,
+  userDocId: user.userDocId,
 });
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { userD, profileD } = useSelector(mapState);
+  const { userD, profileD, userData, userDocId } = useSelector(mapState);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -46,21 +48,33 @@ const Profile = ({ route, navigation }) => {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    if (profileD) {
-      setAvatar(profileD.firebaseUser.avatar);
-      setFirstName(profileD.firebaseUser.fullname);
-      setEmail(userD.email);
-      setPhone(profileD.firebaseUser.phone);
-      setDob(profileD.firebaseUser.dob);
-      setCountry(profileD.firebaseUser.country);
+    if (userData) {
+      setAvatar(userData?.avatar);
+      setFirstName(userData?.fullname);
+      setEmail(userData?.email);
+      setPhone(userData?.phone);
+      setDob(userData?.dob);
+      setCountry(userData?.city);
     }
-  }, [profileD]);
+  }, [userData]);
+
+  // useEffect(() => {
+  //   console.log("profileD => ", profileD);
+  //   if (profileD) {
+  //     setAvatar(profileD.firebaseUser.avatar);
+  //     setFirstName(profileD.firebaseUser.fullname);
+  //     setEmail(userD.email);
+  //     setPhone(profileD.firebaseUser.phone);
+  //     setDob(profileD.firebaseUser.dob);
+  //     setCountry(profileD.firebaseUser.country);
+  //   }
+  // }, [profileD]);
 
   // handleSubmit Func
   // Avatar
   const updateAvatarUser = async () => {
     const url_uuid = uuid.v4();
-    const storageRef = ref(storage, `${userD?.email}/${url_uuid}.png`);
+    const storageRef = ref(storage, `${userData?.email}/${url_uuid}.png`);
     try {
       const r = await fetch(avatar);
       const b = await r.blob();
@@ -78,7 +92,7 @@ const Profile = ({ route, navigation }) => {
     }
   };
   const updateAvatarUser2 = async (downloadURL) => {
-    const userRef = doc(db, "users", profileD?.firebaseDocId);
+    const userRef = doc(db, "users", userDocId);
     await updateDoc(userRef, {
       avatar: downloadURL,
       updatedAt: new Date(),
@@ -91,7 +105,7 @@ const Profile = ({ route, navigation }) => {
 
   // fullname
   const updateFullnameUser = async () => {
-    const userRef = doc(db, "users", profileD.firebaseDocId);
+    const userRef = doc(db, "users", userDocId);
     await updateDoc(userRef, {
       fullname: firstName,
       updatedAt: new Date(),
@@ -104,7 +118,7 @@ const Profile = ({ route, navigation }) => {
 
   // Phone
   const updatePhoneUser = async () => {
-    const userRef = doc(db, "users", profileD?.firebaseDocId);
+    const userRef = doc(db, "users", userDocId);
     await updateDoc(userRef, {
       phone: phone,
       updatedAt: new Date(),
@@ -117,7 +131,7 @@ const Profile = ({ route, navigation }) => {
 
   // DOB
   const updateDobUser = async () => {
-    const userRef = doc(db, "users", profileD?.firebaseDocId);
+    const userRef = doc(db, "users", userDocId);
     await updateDoc(userRef, {
       dob: dob,
       updatedAt: new Date(),
@@ -130,9 +144,9 @@ const Profile = ({ route, navigation }) => {
 
   // country
   const updateCountryUser = async () => {
-    const userRef = doc(db, "users", profileD?.firebaseDocId);
+    const userRef = doc(db, "users", userDocId);
     await updateDoc(userRef, {
-      country: country,
+      city: country,
       updatedAt: new Date(),
     })
       .then(() => {
@@ -151,29 +165,43 @@ const Profile = ({ route, navigation }) => {
   // handleSubmit Func
   const handleSubmit = async () => {
     console.log("Here HandleSubmit");
-    if (!firstName || !phone || !dob || !country) {
-      alert("Please fill all the fields...");
-      return;
+    // if (!firstName || !phone || !dob || !country) {
+    //   alert("Please fill all the fields...");
+    //   return;
+    // }
+    // if (phone && phone.length < 8) {
+    //   alert("Please enter 8 digit or above...");
+    //   return;
+    // }
+    if (avatar !== userData?.avatar) {
+      console.log("UPDATING AVATAR");
+      await updateAvatarUser();
     }
-    if (phone && phone.length < 8) {
-      alert("Please enter 8 digit or above...");
-      return;
-    }
-    if (avatar !== profileD.firebaseUser.avatar) await updateAvatarUser();
-    if (firstName !== profileD.firebaseUser.fullname)
+    if (firstName !== userData?.fullname) {
+      console.log("UPDATING FULLNAME");
       await updateFullnameUser();
-    if (phone !== profileD.firebaseUser.phone) await updatePhoneUser();
-    if (dob !== profileD.firebaseUser.dob) await updateDobUser();
-    if (country !== profileD.firebaseUser.city) await updateCountryUser();
-    const q = query(collection(db, "users"), where("email", "==", userD.email));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.docs.map((doc) => {
-      let user = {
-        firebaseUser: doc.data(),
-        firebaseDocId: doc.id,
-      };
-      dispatch(setProfile(user));
-    });
+    }
+    if (phone !== userData?.phone) {
+      console.log("UPDATING PHONE");
+      await updatePhoneUser();
+    }
+    if (dob !== userData?.dob) {
+      console.log("UPDATING DOB");
+      await updateDobUser();
+    }
+    if (country !== userData?.city) {
+      console.log("UPDATING CITY");
+      await updateCountryUser();
+    }
+    // const q = query(collection(db, "users"), where("email", "==", userD.email));
+    // const querySnapshot = await getDocs(q);
+    // querySnapshot.docs.map((doc) => {
+    //   let user = {
+    //     firebaseUser: doc.data(),
+    //     firebaseDocId: doc.id,
+    //   };
+    //   dispatch(setProfile(user));
+    // });
     navigation.navigate("NewHomePage");
     console.log("Here HandleSubmit done");
   };
@@ -264,6 +292,7 @@ const Profile = ({ route, navigation }) => {
                 value={dob}
                 onChangeText={setDob}
                 keyboardType="numeric"
+                placeholder="DD/MM/YYYY"
               />
             </View>
             {/* City, country */}

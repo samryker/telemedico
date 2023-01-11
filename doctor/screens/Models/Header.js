@@ -5,14 +5,16 @@ import { useSelector } from "react-redux";
 import { icons, images } from "../../constants";
 import { Ionicons } from "@expo/vector-icons";
 import { useDrawerStatus } from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
 });
 
 const Header = (props) => {
-  const { navigation, bg, isHome, fromBT } = props;
+  const { bg, isHome, fromBT } = props;
   const { userD } = useSelector(mapState);
+  const navigation = useNavigation();
   return (
     <View
       style={[styles.header, { backgroundColor: bg.length > 0 ? bg : "white" }]}
@@ -46,7 +48,7 @@ const Header = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.headerSub}
-        // onPress={() => navigation.openDrawer()}
+        onPress={() => navigation.toggleDrawer()}
         // onPress={() => console.log("Navigation: ", navigation)}
         // onPress={() => navigation.getParent().openDrawer()
       >

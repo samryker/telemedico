@@ -1,5 +1,15 @@
 import userTypes from "./user.types";
-import { storeData, removeStoreData, getStorage } from '../../util/AsyncStorage';
+import {
+  storeData,
+  removeStoreData,
+  getStorage,
+} from "../../util/AsyncStorage";
+import { auth, db } from "./../../firebase/utils";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 // PROPERTY
 export const signUpUser = (user, token) => async (dispatch) => {
@@ -12,6 +22,31 @@ export const signUpUser = (user, token) => async (dispatch) => {
       type: userTypes.SET_TOKEN,
       payload: token,
     });
+    await createUserWithEmailAndPassword(auth, user.email, user.password)
+      .then(async (userCredential) => {
+        const timestemps = new Date();
+        const userD = {
+          uid: userCredential.user.uid,
+          fullname: user.firstName,
+          email: user.email,
+          phone: "",
+          dob: "",
+          city: "",
+          password: user.password,
+          avatar: "",
+          createdAt: timestemps,
+          updatedAt: null,
+          deletedAt: null,
+        };
+        await setDoc(doc(db, "users", `${userCredential.user.uid}`), userD);
+        dispatch({
+          type: userTypes.SET_CURRENT_USER_DOC_ID,
+          payload: userCredential.user.uid,
+        });
+      })
+      .catch((err) => {
+        console.log("error from signUp => ", err);
+      });
   } catch (err) {
     console.log(err);
   }
@@ -29,14 +64,13 @@ export const setUserame = (username, email, password) => async (dispatch) => {
 export const signInUser = (user, token) => async (dispatch) => {
   try {
     await storeData({
-      key: 'user_info',
+      key: "user_info",
       data: {
         isLogin: true,
-        user, token,
-      }
+        user,
+        token,
+      },
     });
-    console.log("User from signInUser");
-    console.log(user);
     dispatch({
       type: userTypes.SIGN_IN_SUCCESS,
       payload: user,
@@ -45,19 +79,49 @@ export const signInUser = (user, token) => async (dispatch) => {
       type: userTypes.SET_TOKEN,
       payload: token,
     });
+    await signInWithEmailAndPassword(auth, user.email, user.password)
+      .then((userCredential) => {
+        dispatch({
+          type: userTypes.SET_CURRENT_USER_DOC_ID,
+          payload: userCredential.user.uid,
+        });
+      })
+      .catch((err) => {
+        console.log("error from signIn User => ", err);
+      });
   } catch (err) {
     console.log(err);
   }
 };
 export const signOutUser = () => async (dispatch) => {
-
-  await removeStoreData('user_info')
+  await removeStoreData("user_info");
   try {
     dispatch({
       type: userTypes.SET_CURRENT_USER_OUT,
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getCurrentUser = (docId) => async (dispatch) => {
+  try {
+    const docRef = doc(db, "users", docId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      dispatch({
+        type: userTypes.FETCH_USER,
+        payload: docSnap.data(),
+      });
+    } else {
+      // dispatch({
+      //   type: userTypes.SET_ERRORS,
+      //   payload: 'no user with this uid',
+      // });
+      console.log("error from here 122 actions ");
+    }
+  } catch (error) {
+    console.log("error from ", error);
   }
 };
 

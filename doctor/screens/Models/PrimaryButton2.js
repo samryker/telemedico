@@ -1,15 +1,15 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const rIcon =
   "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/pwa_assets%2FprimaryButton%2Frightarrow.png?alt=media&token=ab2e5fe9-1935-4905-a13d-7dc346de99b5";
 
-const PrimaryButton = (props) => {
+const PrimaryButton2 = (props) => {
   const { icon, name, navigation } = props;
   return (
     <TouchableOpacity
       style={[styles.btn, styles.shadow]}
-      onPress={() => navigation.navigate("intakeForm")}
+      onPress={() => navigation.navigate("doctorList", { filter: "*" })}
     >
       <Image source={{ uri: icon }} style={styles.iconStyle1} />
       <Text style={styles.btnText}>{name}</Text>
@@ -23,7 +23,7 @@ const PrimaryButton = (props) => {
   );
 };
 
-export default PrimaryButton;
+export default PrimaryButton2;
 
 const styles = StyleSheet.create({
   btn: {
