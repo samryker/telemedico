@@ -86,8 +86,36 @@ export const signInUser = (user, token) => async (dispatch) => {
           payload: userCredential.user.uid,
         });
       })
-      .catch((err) => {
-        console.log("error from signIn User => ", err);
+      .catch(async (err) => {
+        if (err.code === "auth/user-not-found") {
+          await createUserWithEmailAndPassword(auth, user.email, user.password)
+            .then(async (userCred) => {
+              const timestemps = new Date();
+              const userD = {
+                uid: userCred.user.uid,
+                fullname: "",
+                email: user.email,
+                phone: "",
+                dob: "",
+                city: "",
+                password: user.password,
+                avatar: "",
+                createdAt: timestemps,
+                updatedAt: null,
+                deletedAt: null,
+              };
+              await setDoc(doc(db, "users", `${userCred.user.uid}`), userD);
+              dispatch({
+                type: userTypes.SET_CURRENT_USER_DOC_ID,
+                payload: userCred.user.uid,
+              });
+            })
+            .catch((err) => {
+              console.log("error from signUp => ", err);
+            });
+        } else {
+          console.log("error from signIn User => ", err.code);
+        }
       });
   } catch (err) {
     console.log(err);
@@ -104,6 +132,34 @@ export const signOutUser = () => async (dispatch) => {
   }
 };
 
+export const profileUpdatedSuccess = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: userTypes.PROFILE_UPDATED_SUCCESS,
+    });
+  } catch (error) {
+    console.log("error profileUpdatedSuccess => ", error);
+  }
+};
+export const restProfileUpdatedSuccess = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: userTypes.RESET_PROFILE_UPDATED_SUCCESS,
+    });
+  } catch (error) {
+    console.log("error restProfileUpdatedSuccess => ", error);
+  }
+};
+export const resetAuthSign = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: userTypes.RESET_AUTH_SIGN_SUCCESS,
+    });
+  } catch (error) {
+    console.log("error resetAuthSign => ", error);
+  }
+};
+
 export const getCurrentUser = (docId) => async (dispatch) => {
   try {
     const docRef = doc(db, "users", docId);
@@ -114,10 +170,6 @@ export const getCurrentUser = (docId) => async (dispatch) => {
         payload: docSnap.data(),
       });
     } else {
-      // dispatch({
-      //   type: userTypes.SET_ERRORS,
-      //   payload: 'no user with this uid',
-      // });
       console.log("error from here 122 actions ");
     }
   } catch (error) {

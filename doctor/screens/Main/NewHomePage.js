@@ -12,6 +12,8 @@ import TitleModal from "../Models/TitleModal";
 import IconFeather from "react-native-vector-icons/Feather";
 import {
   getCurrentUser,
+  resetAuthSign,
+  restProfileUpdatedSuccess,
   signInUser,
   signOutUser,
   signUpUser,
@@ -260,24 +262,42 @@ const specialities = [
 const mapState = ({ user }) => ({
   userData: user.userData,
   userDocId: user.userDocId,
+  profileUpdatedSuccess: user.profileUpdatedSuccess,
+  signInSuccess: user.signInSuccess,
+  signUpSuccess: user.signUpSuccess,
 });
 
 const NewHomePage = () => {
-  const { userData, userDocId } = useSelector(mapState);
+  const {
+    userData,
+    userDocId,
+    profileUpdatedSuccess,
+    signInSuccess,
+    signUpSuccess,
+  } = useSelector(mapState);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [userUpdated, setUserUpdated] = useState(false);
-  useEffect(() => {
-    setUserUpdated(false);
-  }, []);
 
   useEffect(() => {
-    if (!userData || (isFocused && !userUpdated)) {
+    setUserUpdated(false);
+    console.log('line 285 => ', signInSuccess, signUpSuccess)
+    if (signInSuccess || signUpSuccess) {
+
       dispatch(getCurrentUser(userDocId));
+      dispatch(resetAuthSign());
       setUserUpdated(true);
     }
-  }, [userData, userDocId, isFocused, userUpdated]);
+  }, []);
+
+  // useEffect(() => {
+  //   if (isFocused && !userUpdated && profileUpdatedSuccess) {
+  //     dispatch(getCurrentUser(userDocId));
+  //     dispatch(restProfileUpdatedSuccess());
+  //     setUserUpdated(true);
+  //   }
+  // }, [userDocId, isFocused, userUpdated]);
 
   return (
     <View style={styles.container}>

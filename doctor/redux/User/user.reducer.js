@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   signInSuccess: false,
   signUpSuccess: false,
   resetPasswordSuccess: false,
+  profileUpdatedSuccess: false,
   userD: null,
   doctorD: null,
   profileD: null,
@@ -78,6 +79,22 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userDocId: action.payload,
       };
+    case userTypes.PROFILE_UPDATED_SUCCESS:
+      return {
+        ...state,
+        profileUpdatedSuccess: action.payload,
+      };
+    case userTypes.RESET_PROFILE_UPDATED_SUCCESS:
+      return {
+        ...state,
+        profileUpdatedSuccess: false,
+      };
+    case userTypes.RESET_AUTH_SIGN_SUCCESS:
+      return {
+        ...state,
+        signInSuccess: false,
+        signUpSuccess: false,
+      };
 
     // TOKEN
     case userTypes.SET_TOKEN:
@@ -105,8 +122,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case userTypes.RESET_AUTH_FORMS:
       return {
         ...state,
-        signInSuccess: false,
-        signUpSuccess: false,
         resetPasswordSuccess: false,
       };
     case userTypes.RESET_STATES:

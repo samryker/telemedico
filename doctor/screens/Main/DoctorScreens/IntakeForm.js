@@ -14,6 +14,7 @@ import {
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
+import auth from "@react-native-firebase/auth";
 
 const IntakeForm = ({ route, navigation }) => {
   const { doctorName } = route?.params || "doctor not specified";
@@ -23,11 +24,35 @@ const IntakeForm = ({ route, navigation }) => {
   const [modalHome, setModalHome] = useState(false);
   const [modalBack, setModalBack] = useState(false);
 
+  //////////////////////// phone
+  // If null, no SMS has been sent
+  const [confirm, setConfirm] = useState(null);
+
+  const [code, setCode] = useState("");
+
+  // Handle the button press
+  async function signInWithPhoneNumber(phoneNumber) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setConfirm(confirmation);
+  }
+
+  async function confirmCode() {
+    try {
+      await confirm.confirm(code);
+    } catch (error) {
+      console.log("Invalid code.");
+    }
+  }
+
+  //////////////////////// phone
+
   // f2
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
+  const [verifiedIsGood, setVerifiedIsGood] = useState(0);
+  const [errorsOfUser, setErrorsOfUser] = useState("");
   // f3
   const [f3, setF3] = useState("");
   // f4
@@ -244,21 +269,10 @@ const IntakeForm = ({ route, navigation }) => {
     if (appointment2) appointment += "4-7 Days";
     if (appointment3) appointment += "Morning India time: 5.30am - 10am";
     if (appointment4) appointment += "Evening India time: 5.30pm - 12am";
-    if (
-      name.length === 0 ||
-      birth.length === 0 ||
-      gender.length === 0 ||
-      phone.length === 0 ||
-      f4.length === 0 ||
-      medication.length === 0 ||
-      f3.length === 0 ||
-      q1.length === 0 ||
-      q2.length === 0 ||
-      q3.length === 0 ||
-      requestService.length === 0 ||
-      appointment.length === 0
-    ) {
-      setHelp2(true);
+    if (phone.length === 0 || f3.length === 0) {
+      setErrorsOfUser(
+        "Phone Number verification and Reason for consultation are required! PLease try again!"
+      );
     } else {
       // await fetch("https://app.medipocket.world/intake/", {
       await fetch("https://app.medipocket.world/intake_form/", {
@@ -287,7 +301,6 @@ const IntakeForm = ({ route, navigation }) => {
           question1: q1,
           question2: q2,
           question3: q3,
-          requestService: requestService,
           appointment: appointment,
         }),
       })
@@ -392,9 +405,32 @@ const IntakeForm = ({ route, navigation }) => {
               )}
             </View>
             {/* Phone Number */}
+            {errorsOfUser.length > 0 && (
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#ff0000",
+                    fontSize: 10,
+                    marginBottom: 5,
+                    marginTop: 15,
+                  }}
+                >
+                  * Phone Number and verification Required !
+                </Text>
+              </View>
+            )}
             <View style={styles.inputContainer}>
               <TextInput
-                style={styles.input}
+                style={[
+                  errorsOfUser.length > 0
+                    ? styles.inputErrorStyle
+                    : styles.input,
+                ]}
                 value={phone}
                 onChangeText={setPhone}
                 placeholder="PhoneNumber"
@@ -405,6 +441,55 @@ const IntakeForm = ({ route, navigation }) => {
                 <Text style={styles.error}>{phoneError}</Text>
               )}
             </View>
+            {/* <TouchableOpacity
+              style={{
+                width: "100%",
+                backgroundColor: "#000000",
+                borderRadius: 8,
+                padding: 10,
+                marginVertical: 10,
+              }}
+              onPress={() => {
+                console.log("pressed");
+                signInWithPhoneNumber();
+              }}
+            >
+              <Text
+                style={{ color: "#fff", fontSize: 14, textAlign: "center" }}
+              >
+                Verify Phone Number
+              </Text>
+            </TouchableOpacity> */}
+            {/* {confirm && (
+              <>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={code}
+                    onChangeText={setCode}
+                    placeholder="OTP"
+                    placeholderTextColor={"grey"}
+                    keyboardType="default"
+                  />
+                </View>
+                <TouchableOpacity
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#000000",
+                    borderRadius: 8,
+                    padding: 10,
+                    marginVertical: 10,
+                  }}
+                  onPress={() => confirmCode()}
+                >
+                  <Text
+                    style={{ color: "#fff", fontSize: 14, textAlign: "center" }}
+                  >
+                    Verify
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )} */}
           </View>
         </View>
         {/* Requesting USA MEdical services for */}
@@ -1094,8 +1179,33 @@ const IntakeForm = ({ route, navigation }) => {
           {/* Form */}
           <View style={styles.inputsContainer}>
             <View style={styles.inputContainer}>
+              {errorsOfUser.length > 0 && (
+                <View
+                  style={{
+                    width: "100%",
+                    flexDirection: "row",
+                    margin: 0,
+                    padding: 0,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#ff0000",
+                      fontSize: 10,
+                      marginBottom: 5,
+                      marginTop: 15,
+                    }}
+                  >
+                    * The reason for consulting the doctor is Required !
+                  </Text>
+                </View>
+              )}
               <TextInput
-                style={styles.input}
+                style={[
+                  errorsOfUser.length > 0
+                    ? styles.inputErrorStyle
+                    : styles.input,
+                ]}
                 value={f3}
                 onChangeText={setF3}
                 placeholder="Reason for consulting the doctor"
@@ -1244,6 +1354,22 @@ const IntakeForm = ({ route, navigation }) => {
             </View>
           </View>
         </View>
+        {errorsOfUser.length > 0 && (
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 0,
+              padding: 0,
+            }}
+          >
+            <Text style={{ color: "#ff0000", fontSize: 12, marginVertical: 5 }}>
+              {errorsOfUser}
+            </Text>
+          </View>
+        )}
         <TouchableOpacity style={styles.button1} onPress={handleSubmit}>
           {indicatorLoad ? (
             <ActivityIndicator size="large" color="#ffffff" />
@@ -1543,6 +1669,17 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 15,
     color: "black",
+  },
+  inputErrorStyle: {
+    fontSize: 14,
+    backgroundColor: COLORS.bgColor1,
+    borderRadius: 8,
+    padding: 10,
+    width: "100%",
+    // marginTop: 15,
+    color: "black",
+    borderColor: "#ff0000",
+    borderWidth: 1,
   },
   codeContainer: {
     width: "45%",

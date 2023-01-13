@@ -38,7 +38,6 @@ const Drawer = createDrawerNavigator();
 const CustomDrawerContent = ({ navigation }) => {
   const route = useRoute();
   const { doctorD, currentUser, errors, prevRoute } = useSelector(mapState);
-  console.log("mapState =>", currentUser, errors);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!currentUser) {

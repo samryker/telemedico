@@ -1,4 +1,7 @@
+eas build -p android --profile preview
+
+yarn run android
+
 npx expo start --dev-client
 
-eas build -p android --profile-preview
 

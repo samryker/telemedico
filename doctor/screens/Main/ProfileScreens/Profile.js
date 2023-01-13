@@ -18,7 +18,11 @@ import * as DocumentPicker from "expo-document-picker";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
-import { setProfile } from "../../../redux/User/user.actions";
+import {
+  getCurrentUser,
+  profileUpdatedSuccess,
+  setProfile,
+} from "../../../redux/User/user.actions";
 import {
   doc,
   updateDoc,
@@ -55,8 +59,10 @@ const Profile = ({ route, navigation }) => {
       setPhone(userData?.phone);
       setDob(userData?.dob);
       setCountry(userData?.city);
+    } else {
+      dispatch(getCurrentUser(userDocId));
     }
-  }, [userData]);
+  }, [userData, userDocId]);
 
   // useEffect(() => {
   //   console.log("profileD => ", profileD);
@@ -164,6 +170,7 @@ const Profile = ({ route, navigation }) => {
 
   // handleSubmit Func
   const handleSubmit = async () => {
+    setIsDone(true);
     console.log("Here HandleSubmit");
     // if (!firstName || !phone || !dob || !country) {
     //   alert("Please fill all the fields...");
@@ -202,9 +209,19 @@ const Profile = ({ route, navigation }) => {
     //   };
     //   dispatch(setProfile(user));
     // });
+    setIsDone(false);
+    dispatch(profileUpdatedSuccess());
     navigation.navigate("NewHomePage");
     console.log("Here HandleSubmit done");
   };
+
+  if (!userData) {
+    return (
+      <View style={styles.container2}>
+        <ActivityIndicator size="large" color={COLORS.blueBtn} />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -375,6 +392,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.bgColor1,
     paddingTop: 0,
+  },
+  container2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   subContainer: {
     // flex: 1,

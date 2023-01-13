@@ -44,6 +44,7 @@
     },
     "description": "",
     "plugins": [
+      "@react-native-firebase/app",
       "sentry-expo",
       [
         "@stripe/stripe-react-native",
