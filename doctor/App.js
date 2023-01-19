@@ -14,7 +14,7 @@ import { storeData, removeStoreData, getStorage } from './util/AsyncStorage';
 const cache = new InMemoryCache();
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "https://app.medipocket.world/graphql/",
+  uri: "https://com.medipocket.world/graphql/",
   cache,
   defaultOptions: { watchQuery: { fetchPolicy: "cache-and-network" } },
 });

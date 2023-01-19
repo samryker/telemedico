@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">=1.0.0"
+    "version": ">=1.0.0",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
     "com.medipocket.world": {

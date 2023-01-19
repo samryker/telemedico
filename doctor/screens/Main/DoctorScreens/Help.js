@@ -395,7 +395,7 @@ const Help = ({ navigation }) => {
     ) {
       setHelp2(true);
     } else {
-      await fetch("https://app.medipocket.world/intake_form/", {
+      await fetch("https://com.medipocket.world/intake_form/", {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -274,8 +274,8 @@ const IntakeForm = ({ route, navigation }) => {
         "Phone Number verification and Reason for consultation are required! PLease try again!"
       );
     } else {
-      // await fetch("https://app.medipocket.world/intake/", {
-      await fetch("https://app.medipocket.world/intake_form/", {
+      // await fetch("https://com.medipocket.world/intake/", {
+      await fetch("https://com.medipocket.world/intake_form/", {
         method: "POST",
         headers: {
           Accept: "application/json",

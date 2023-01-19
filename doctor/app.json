@@ -32,7 +32,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#40e0d0"
       },
-      "versionCode": 8,
+      "versionCode": 13,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO"
@@ -68,7 +68,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "e3a4b32c-0938-4794-a393-a453d0e4aaae"
+        "projectId": "a07d7c5a-d2e4-4a1f-bcfe-e5bc04555d1d"
       }
     }
   }

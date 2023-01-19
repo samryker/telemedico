@@ -198,7 +198,7 @@ const CustomDrawerContent = ({ navigation }) => {
               size={20}
               color="transparent"
             />
-            <Text style={styles.itemText2}>health@app.medipocket.world</Text>
+            <Text style={styles.itemText2}>health@com.medipocket.world</Text>
           </View>
           {/* Horizontal Line */}
           {/* <View style={styles.itemBorderTop}></View> */}

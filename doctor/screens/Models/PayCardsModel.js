@@ -194,7 +194,7 @@ const PayCardsModel = (props) => {
     console.log("get payment intent from server =-=-=-=-=-=-=-=-=-=-=-");
 
     try {
-      // https://app.medipocket.world/payments/test-payment/   // https://pay.medipocket.world/create-payment-intent/
+      // https://com.medipocket.world/payments/test-payment/   // https://pay.medipocket.world/create-payment-intent/
       await fetch("https://pay.medipocket.world/create-payment-intent/", {
         // fetch("http://192.168.43.149:3000/create-payment-intent/", {
         method: "POST",
