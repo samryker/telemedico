@@ -25,11 +25,14 @@ from payments import urls
 # from intake_form.views import intake_form
 from userauth.views import get_post_data, change_pass, reactivate
 from intake_form.views import Entry
+from .views import gitpull
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('gitpull/', gitpull),
+
     path('graphql/',csrf_exempt(GraphQLView.as_view(graphiql=True))),
     #path('graphql/', get_post_data),
     path('payments/', include('payments.urls')),
